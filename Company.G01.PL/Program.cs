@@ -28,14 +28,7 @@ namespace Company.G01.PL
 
             builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
 
-            //Lifetime
-            //builder.Services.AddScoped(); // Create Object Life Time Per Request - Unreachable Object
-            //builder.Services.AddKeyedTransient(); // Create Object Life Time per Operation
-            //builder.Services.AddSingleton(); // Create Object Life Time Per Application - Reachable Object
 
-            //builder.Services.AddScoped<IScopedService,ScopedService>(); // Per Request
-            //builder.Services.AddTransient<ITransientService, TransientService>(); // Per Operation
-            //builder.Services.AddSingleton<ISingletonService, SingletonService>(); // Per Application 
 
             var app = builder.Build();
 
