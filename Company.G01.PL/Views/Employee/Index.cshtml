@@ -51,6 +51,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Image</th>
                 <th>Age</th>
                 <th>Email</th>
                 <th>Address</th>
@@ -70,6 +71,9 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        <img src="~/Files/images/@item.ImageName" class="img-fluid rounded-circle"></img>
+                    </td>
                     <td>@item.Name</td>
                     <td>@item.Age</td>
                     <td>@item.Email</td>
