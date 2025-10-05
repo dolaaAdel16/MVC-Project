@@ -66,22 +66,6 @@ namespace Company.G01.PL.Controllers
         {
             if (ModelState.IsValid) // Server Side Validation 
             {
-                try
-                {
-                    // Manual  Mapping
-                    //var employee = new Employee()
-                    //{
-                    //    Name = model.Name,
-                    //    Email = model.Email,
-                    //    Address = model.Address,
-                    //    Phone = model.Phone,
-                    //    Salary = model.Salary,
-                    //    HiringDate = model.HiringDate,
-                    //    CreateAt = model.CreateAt,
-                    //    Age = model.Age,
-                    //    IsActive = model.IsActive,
-                    //    IsDeleted = model.IsDeleted
-                    //};
 
                     var employee = _mapper.Map<Employee>(model);
                     _unitOfWork.EmployeeRepository.Add(employee);
@@ -94,11 +78,6 @@ namespace Company.G01.PL.Controllers
                         return RedirectToAction(nameof(Index));
                     }
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-            }
 
             return View(model);
         }
@@ -183,7 +162,6 @@ namespace Company.G01.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (id != employee.Id) return BadRequest();
 
 
 

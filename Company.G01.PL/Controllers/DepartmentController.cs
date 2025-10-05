@@ -74,7 +74,6 @@ namespace Company.G01.PL.Controllers
             //var department = _departmentRepository.Get(id.Value);
             //if (department is null) return NotFound(new { StatusCode = 404, message = $"Department with id :{id}  is not found" });
 
-            return Details(id , "Edit");
         }
 
         [HttpPost]
