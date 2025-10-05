@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Company.G01.BLL.Interfaces
 {
-    public interface IGenericRepository<T> where T : BaseEntity
+    public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        IEnumerable<T> GetAll();
+        Task <IEnumerable<TEntity>> GetAllAsync();
 
-        T? Get(int id);
+        Task<TEntity?> GetAsync(int id);
 
-        void Add(T model);
+        Task AddAsync(TEntity model);
 
-        void Update(T model);
+        void Update(TEntity model);
 
-        void Delete(T model);
+        void Delete(TEntity model);
     }
 }

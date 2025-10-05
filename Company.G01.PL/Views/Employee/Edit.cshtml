@@ -7,14 +7,16 @@
 <br />
 <br />
 
-<form asp-action="Edit">
-    <partial name="EmployeePartialView/_CreateEditPartialView" />
+<form asp-action="Edit" encrypte =" multipart/form-data">
 
-    <div class="my-3">
+    <partial name="EmployeePartialView/_CreateEditPartialView" />
+    <input asp-for="ImageName" hidden/>
+
+    <div>
         <input type="submit" value="Save" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-light">Back To List</a>
 
-        <div />
+    <div/>
 </form>
 
 @section ValidationSection {
