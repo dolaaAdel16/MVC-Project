@@ -9,10 +9,12 @@ namespace Company.G01.PL.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(UserManager<AppUser> userManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser>SignInManager)
         {
             _userManager = userManager;
+            _signInManager = SignInManager;
         }
 
 
@@ -31,10 +33,10 @@ namespace Company.G01.PL.Controllers
             if (ModelState.IsValid) //Server Side Validation    
             {
                 var user = await _userManager.FindByNameAsync(model.UserName);
-                if(user is null)
+                if (user is null)
                 {
                     user = await _userManager.FindByEmailAsync(model.Email);
-                    if(user is null)
+                    if (user is null)
                     {
                         user = new AppUser()
                         {
@@ -59,11 +61,43 @@ namespace Company.G01.PL.Controllers
                     }
                 }
 
-                ModelState.AddModelError("" , "Invalid Sign Up !!");
-               
+                ModelState.AddModelError("", "Invalid Sign Up !!");
+
             }
             return View(model);
-        } 
+        }
         #endregion
+
+
+        [HttpGet]
+        public IActionResult SignIn()
+        {
+            return View();
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SignIn(SignInDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+               var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user is not null)
+                {
+                    var flag = await _userManager.CheckPasswordAsync(user, model.Password);
+                    if (flag)
+                    {
+                        var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction(nameof(HomeController.Index), "Home");
+                        }
+                    }
+                }
+                ModelState.AddModelError("", "Invalid login !!");
+            }
+            return View();
+
+        }
     }
 }
