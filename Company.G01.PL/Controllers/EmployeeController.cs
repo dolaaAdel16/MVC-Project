@@ -92,18 +92,20 @@ namespace Company.G01.PL.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult>  Edit(int? id, string viewName = "Details")
+        public async Task<IActionResult>  Details(int? id, string viewName = "Details")
         {
             if (id is null) return BadRequest("Invalid Id "); // 400
 
             var employee = await _unitOfWork.EmployeeRepository.GetAsync(id.Value);
             if (employee is null) return NotFound(new { StatusCode = 404, message = $"Employee with id :{id}  is not found" });
 
+            var dto = _mapper.Map<CreateEmployeeDTO>(employee);
+
             return View(employee);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id1, int? id)
         {
             var departments = await _unitOfWork.DepartmentRepository.GetAllAsync();
             ViewData["Departments"] = departments;
@@ -154,14 +156,14 @@ namespace Company.G01.PL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             //    if (id is null) return BadRequest("Invalid Id "); // 400
 
             //    var department = _departmentRepository.Get(id.Value);
             //    if (department is null) return NotFound(new { StatusCode = 404, message = $"Department with id :{id}  is not found" });
 
-            return await Edit(id, "Delete");
+            return await Delete(id);
         }
 
         [HttpPost]
